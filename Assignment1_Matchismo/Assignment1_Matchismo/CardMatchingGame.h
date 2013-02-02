@@ -13,12 +13,14 @@
 @interface CardMatchingGame : NSObject
 
 @property (readonly, nonatomic) int score;
-
+@property (strong, nonatomic) NSString *lastFlipResult; //Task 3: describes the results of the last flip
 
 - (id)initWithCardCount:(NSUInteger)count
 			  usingDeck:(Deck *)deck;
 - (void)flipCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
+
+
 
 
 @end

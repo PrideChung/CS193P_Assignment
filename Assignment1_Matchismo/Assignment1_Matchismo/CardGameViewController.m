@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastFlipResultLabel;
 
 @end
 
@@ -39,13 +40,11 @@
 {
 	for (UIButton *cardButton in self.cardButtons) {
 		Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-		
-//		NSLog(@"%@",card.contents);
 				
 		UIImage *rikka = [UIImage imageNamed:@"Rikka"];
 		[cardButton setImage:rikka forState:UIControlStateNormal];
 		[cardButton setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
-		[cardButton setImage:nil forState:UIControlStateDisabled];
+		[cardButton setImage:[[UIImage alloc] init] forState:UIControlStateDisabled];
 
 		[cardButton setTitle:card.contents forState:UIControlStateSelected];
 		[cardButton setTitle:card.contents forState:UIControlStateDisabled];
@@ -56,6 +55,8 @@
 	}
 	
 	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+	self.lastFlipResultLabel.hidden = NO;
+	self.lastFlipResultLabel.text = self.game.lastFlipResult;
 }
 
 - (void)viewDidLoad
