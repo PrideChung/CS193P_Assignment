@@ -18,6 +18,7 @@ typedef enum  {
 @interface CardMatchingGame : NSObject <NSCopying>
 
 @property (readonly, nonatomic) int score;
+@property (nonatomic) int flipCount;
 @property (strong, nonatomic) NSString *lastFlipResult; //Task 3: describes the results of the last flip
 @property (nonatomic) CardMathingType cardMatchingType;
 

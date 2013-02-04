@@ -13,8 +13,6 @@
 
 @interface CardGameViewController () <UIActionSheetDelegate>
 
-
-@property (nonatomic) int flipCount;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) CardMatchingGame *pausedGame;//before go back to history,use this property to save the current playing game
 @property (strong, nonatomic) NSMutableArray *gameSnapshots;
@@ -73,12 +71,7 @@
 	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 	self.lastFlipResultLabel.hidden = NO;
 	self.lastFlipResultLabel.text = self.game.lastFlipResult;
-}
-
-- (void)setFlipCount:(int)flipCount
-{
-	_flipCount = flipCount;
-	self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", _flipCount];
+	self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
 }
 
 - (IBAction)flipCard:(UIButton *)sender
@@ -88,7 +81,6 @@
 	}
 	
 	[self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-	self.flipCount++;
 	self.matchingTypeSegment.enabled = NO;
 	[self updateUI];
 	
@@ -116,7 +108,6 @@
 		[[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
 										  usingDeck:[[PlayingCardDeck alloc] init]];
 		[self changeMatchingType];
-		self.flipCount = 0;
 		self.matchingTypeSegment.enabled = YES;
 		[self.gameSnapshots removeAllObjects];
 		self.gameHistorySlider.maximumValue = 0;

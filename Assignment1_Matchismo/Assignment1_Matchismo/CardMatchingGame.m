@@ -54,6 +54,8 @@
 	
 	if (card && !card.isUnplayable) {
 		
+		self.flipCount++;
+		
 		if (!card.isFaceUp) {
 			
 			if (self.cardMatchingType == TwoCardMatchingType) {
@@ -142,6 +144,7 @@
 {
 	CardMatchingGame *game = [[CardMatchingGame alloc] init];
 	game.score = self.score;
+	game.flipCount = self.flipCount;
 	game.lastFlipResult = self.lastFlipResult;
 	game.cardMatchingType = self.cardMatchingType;
 	game.cards = [[NSMutableArray alloc] initWithArray:self.cards copyItems:YES];
