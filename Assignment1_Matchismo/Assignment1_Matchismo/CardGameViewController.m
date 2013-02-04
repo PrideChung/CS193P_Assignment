@@ -10,7 +10,7 @@
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
 
-@interface CardGameViewController ()
+@interface CardGameViewController () <UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
@@ -18,6 +18,7 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastFlipResultLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *matchingTypeSegment;
 
 @end
 
@@ -25,8 +26,9 @@
 
 - (CardMatchingGame *)game
 {
-	if (!_game) _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
-														  usingDeck:[[PlayingCardDeck alloc] init]];
+	if (!_game) _game =
+		[[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
+										  usingDeck:[[PlayingCardDeck alloc] init]];
 	return _game;
 }
 
@@ -34,6 +36,12 @@
 {
 	_cardButtons = cardButtons;
 	[self updateUI];
+}
+
+- (void)setMatchingTypeSegment:(UISegmentedControl *)matchingTypeSegment
+{
+	_matchingTypeSegment = matchingTypeSegment;
+	[_matchingTypeSegment addTarget:self action:@selector(changeMatchingType) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)updateUI
@@ -64,7 +72,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,7 +90,42 @@
 {
 	[self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
 	self.flipCount++;
+	
+	self.matchingTypeSegment.enabled = NO;
 	[self updateUI];
 }
 
+//task #4 add a button to re-deal
+- (IBAction)deal:(id)sender
+{
+	// use an actionsheet to confirm
+	UIActionSheet *redealConfirmActionSheet = [[UIActionSheet alloc] initWithTitle:@"Want to re-deal?"
+																		  delegate:self
+																 cancelButtonTitle:@"Don't re-deal"
+															destructiveButtonTitle:@"Re-deal"
+																 otherButtonTitles: nil];
+	[redealConfirmActionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 0) {
+		self.game =
+		[[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
+										  usingDeck:[[PlayingCardDeck alloc] init]];
+		[self changeMatchingType];
+		self.flipCount = 0;
+		self.matchingTypeSegment.enabled = YES;
+		[self updateUI];
+	}
+}
+
+- (void)changeMatchingType
+{
+	if (self.matchingTypeSegment.selectedSegmentIndex == 0) {
+		self.game.cardMatchingType = TwoCardMatchingType;
+	} else if (self.matchingTypeSegment.selectedSegmentIndex == 1) {
+		self.game.cardMatchingType = ThreeCardMatchingType;
+	}
+}
 @end

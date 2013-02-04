@@ -341,6 +341,7 @@
 				CC898E9C16BBF403006EC209 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -10,17 +10,20 @@
 #import "Card.h"
 #import "Deck.h"
 
+typedef enum  {
+	TwoCardMatchingType,
+	ThreeCardMatchingType
+} CardMathingType;
+
 @interface CardMatchingGame : NSObject
 
 @property (readonly, nonatomic) int score;
 @property (strong, nonatomic) NSString *lastFlipResult; //Task 3: describes the results of the last flip
+@property (nonatomic) CardMathingType cardMatchingType;
 
 - (id)initWithCardCount:(NSUInteger)count
 			  usingDeck:(Deck *)deck;
 - (void)flipCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
-
-
-
 
 @end
