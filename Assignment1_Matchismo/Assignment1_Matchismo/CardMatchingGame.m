@@ -138,4 +138,14 @@
 	return faceUpCards;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+	CardMatchingGame *game = [[CardMatchingGame alloc] init];
+	game.score = self.score;
+	game.lastFlipResult = self.lastFlipResult;
+	game.cardMatchingType = self.cardMatchingType;
+	game.cards = [[NSMutableArray alloc] initWithArray:self.cards copyItems:YES];
+	
+	return game;
+}
 @end

@@ -9,39 +9,37 @@
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface CardGameViewController () <UIActionSheetDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
+
 @property (nonatomic) int flipCount;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic) CardMatchingGame *pausedGame;//before go back to history,use this property to save the current playing game
+@property (strong, nonatomic) NSMutableArray *gameSnapshots;
+
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastFlipResultLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *matchingTypeSegment;
+@property (weak, nonatomic) IBOutlet UISlider *gameHistorySlider;
 
 @end
 
 @implementation CardGameViewController
 
-- (CardMatchingGame *)game
+- (void)viewDidLoad
 {
-	if (!_game) _game =
-		[[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
-										  usingDeck:[[PlayingCardDeck alloc] init]];
-	return _game;
-}
-
-- (void)setCardButtons:(NSArray *)cardButtons
-{
-	_cardButtons = cardButtons;
+	
+	self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
+													  usingDeck:[[PlayingCardDeck alloc] init]];
+	self.gameSnapshots = [NSMutableArray array];
+	[self.matchingTypeSegment addTarget:self action:@selector(changeMatchingType) forControlEvents:UIControlEventValueChanged];
+	self.gameHistorySlider.maximumValue = 0.0;
+	[self.gameHistorySlider addTarget:self action:@selector(backToHistory) forControlEvents:UIControlEventValueChanged];
 	[self updateUI];
-}
-
-- (void)setMatchingTypeSegment:(UISegmentedControl *)matchingTypeSegment
-{
-	_matchingTypeSegment = matchingTypeSegment;
-	[_matchingTypeSegment addTarget:self action:@selector(changeMatchingType) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)updateUI
@@ -61,23 +59,17 @@
 		cardButton.selected = card.isFaceUp;
 		cardButton.enabled = !card.isUnplayable;
 		cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
+		cardButton.layer.cornerRadius = 8;
+		cardButton.clipsToBounds = YES;
+		
+		if ([self isPlayingHistory]) {
+			cardButton.enabled = NO;
+		}
 	}
 	
 	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 	self.lastFlipResultLabel.hidden = NO;
 	self.lastFlipResultLabel.text = self.game.lastFlipResult;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)setFlipCount:(int)flipCount
@@ -88,11 +80,18 @@
 
 - (IBAction)flipCard:(UIButton *)sender
 {
+	if ([self isPlayingHistory]) { //do nothing if it's showing history
+		return;
+	}
+	
 	[self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
 	self.flipCount++;
-	
 	self.matchingTypeSegment.enabled = NO;
 	[self updateUI];
+	
+	[self.gameSnapshots addObject:[self.game copy]]; //take a snapshot
+	self.gameHistorySlider.maximumValue = [self.gameSnapshots count] > 0 ? [self.gameSnapshots count] -1 : 0;
+	[self.gameHistorySlider setValue:self.gameHistorySlider.maximumValue animated:YES];
 }
 
 //task #4 add a button to re-deal
@@ -116,6 +115,8 @@
 		[self changeMatchingType];
 		self.flipCount = 0;
 		self.matchingTypeSegment.enabled = YES;
+		[self.gameSnapshots removeAllObjects];
+		self.gameHistorySlider.maximumValue = 0;
 		[self updateUI];
 	}
 }
@@ -128,4 +129,32 @@
 		self.game.cardMatchingType = ThreeCardMatchingType;
 	}
 }
+
+- (void)backToHistory
+{
+	int historyIndex = roundf(self.gameHistorySlider.value);
+	
+	if (historyIndex >= self.gameHistorySlider.maximumValue) {
+		//slider moved to right, should show the current game instead of history
+		
+		if (self.pausedGame) {
+			self.game = self.pausedGame;
+			self.pausedGame = nil;
+		}
+	} else {
+		
+		if (!self.pausedGame) {
+			self.pausedGame = self.game; //save current game before back to history
+		}
+		
+		self.game = self.gameSnapshots[historyIndex];
+	}
+	[self updateUI];
+}
+
+- (BOOL)isPlayingHistory
+{
+	return [self.gameSnapshots containsObject:self.game];
+}
+
 @end

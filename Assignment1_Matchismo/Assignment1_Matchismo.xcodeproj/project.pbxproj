@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC1F178B16C0579E00FCC48A /* Rikka.png in Resources */ = {isa = PBXBuildFile; fileRef = CC1F178916C0579E00FCC48A /* Rikka.png */; };
+		CC1F178C16C0579E00FCC48A /* Rikka@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC1F178A16C0579E00FCC48A /* Rikka@2x.png */; };
+		CC1F178E16C057DE00FCC48A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1F178D16C057DE00FCC48A /* QuartzCore.framework */; };
 		CC898E7B16BBF403006EC209 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC898E7A16BBF403006EC209 /* UIKit.framework */; };
 		CC898E7D16BBF403006EC209 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC898E7C16BBF403006EC209 /* Foundation.framework */; };
 		CC898E7F16BBF403006EC209 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC898E7E16BBF403006EC209 /* CoreGraphics.framework */; };
@@ -22,11 +25,13 @@
 		CC898EA216BBF95E006EC209 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = CC898EA116BBF95E006EC209 /* Deck.m */; };
 		CC898EA516BC0306006EC209 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = CC898EA416BC0306006EC209 /* PlayingCard.m */; };
 		CC898EAE16BC16CF006EC209 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = CC898EAD16BC16CF006EC209 /* PlayingCardDeck.m */; };
-		CC898EB816BC456E006EC209 /* Rikka.png in Resources */ = {isa = PBXBuildFile; fileRef = CC898EB716BC456E006EC209 /* Rikka.png */; };
 		CC898EBB16BC5E4F006EC209 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = CC898EBA16BC5E4F006EC209 /* CardMatchingGame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC1F178916C0579E00FCC48A /* Rikka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rikka.png; sourceTree = "<group>"; };
+		CC1F178A16C0579E00FCC48A /* Rikka@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rikka@2x.png"; sourceTree = "<group>"; };
+		CC1F178D16C057DE00FCC48A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CC898E7716BBF403006EC209 /* Assignment1_Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment1_Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC898E7A16BBF403006EC209 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CC898E7C16BBF403006EC209 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -51,7 +56,6 @@
 		CC898EA416BC0306006EC209 /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingCard.m; sourceTree = "<group>"; };
 		CC898EAC16BC16CF006EC209 /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingCardDeck.h; sourceTree = "<group>"; };
 		CC898EAD16BC16CF006EC209 /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingCardDeck.m; sourceTree = "<group>"; };
-		CC898EB716BC456E006EC209 /* Rikka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rikka.png; sourceTree = "<group>"; };
 		CC898EB916BC5E4F006EC209 /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMatchingGame.h; sourceTree = "<group>"; };
 		CC898EBA16BC5E4F006EC209 /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMatchingGame.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC1F178E16C057DE00FCC48A /* QuartzCore.framework in Frameworks */,
 				CC898E7B16BBF403006EC209 /* UIKit.framework in Frameworks */,
 				CC898E7D16BBF403006EC209 /* Foundation.framework in Frameworks */,
 				CC898E7F16BBF403006EC209 /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +78,7 @@
 		CC898E6E16BBF403006EC209 = {
 			isa = PBXGroup;
 			children = (
+				CC1F178D16C057DE00FCC48A /* QuartzCore.framework */,
 				CC898E8016BBF403006EC209 /* Assignment1_Matchismo */,
 				CC898E7916BBF403006EC209 /* Frameworks */,
 				CC898E7816BBF403006EC209 /* Products */,
@@ -106,7 +112,8 @@
 				CC898E9216BBF403006EC209 /* MainStoryboard.storyboard */,
 				CC898E9516BBF403006EC209 /* CardGameViewController.h */,
 				CC898E9616BBF403006EC209 /* CardGameViewController.m */,
-				CC898EB716BC456E006EC209 /* Rikka.png */,
+				CC1F178916C0579E00FCC48A /* Rikka.png */,
+				CC1F178A16C0579E00FCC48A /* Rikka@2x.png */,
 				CC898E8116BBF403006EC209 /* Supporting Files */,
 			);
 			path = Assignment1_Matchismo;
@@ -200,7 +207,8 @@
 				CC898E8F16BBF403006EC209 /* Default@2x.png in Resources */,
 				CC898E9116BBF403006EC209 /* Default-568h@2x.png in Resources */,
 				CC898E9416BBF403006EC209 /* MainStoryboard.storyboard in Resources */,
-				CC898EB816BC456E006EC209 /* Rikka.png in Resources */,
+				CC1F178B16C0579E00FCC48A /* Rikka.png in Resources */,
+				CC1F178C16C0579E00FCC48A /* Rikka@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

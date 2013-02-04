@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Card : NSObject
+@interface Card : NSObject <NSCopying>
 
 @property (strong, nonatomic) NSString *contents;
 

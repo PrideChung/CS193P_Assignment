@@ -27,4 +27,12 @@
 	return score;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+	Card *card = [[Card alloc] init];
+	card.contents = self.contents;
+	card.faceUp = self.isFaceUp;
+	card.unplayable = self.isUnplayable;
+	return card;
+}
 @end
