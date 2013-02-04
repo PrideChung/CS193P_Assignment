@@ -1,4 +1,4 @@
-###all taskes are complete, including extra credit
+###all tasks are complete, including extra credit
 
 -------------
 
