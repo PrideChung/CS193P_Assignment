@@ -64,6 +64,9 @@
 		
 		if ([self isPlayingHistory]) {
 			cardButton.enabled = NO;
+			self.lastFlipResultLabel.alpha = 0.5;
+		} else {
+			self.lastFlipResultLabel.alpha = 1;
 		}
 	}
 	
