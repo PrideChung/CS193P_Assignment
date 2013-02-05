@@ -60,18 +60,23 @@
 		cardButton.layer.cornerRadius = 8;
 		cardButton.clipsToBounds = YES;
 		
-		if ([self isPlayingHistory]) {
-			cardButton.enabled = NO;
-			self.lastFlipResultLabel.alpha = 0.5;
-		} else {
-			self.lastFlipResultLabel.alpha = 1;
-		}
+		cardButton.enabled = ![self isPlayingHistory];
 	}
 	
+	
 	self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-	self.lastFlipResultLabel.hidden = NO;
 	self.lastFlipResultLabel.text = self.game.lastFlipResult;
 	self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.game.flipCount];
+	
+	if ([self isPlayingHistory]) {
+		self.scoreLabel.alpha = 0.5;
+		self.lastFlipResultLabel.alpha = 0.5;
+		self.flipsLabel.alpha = 0.5;
+	} else {
+		self.scoreLabel.alpha = 1;
+		self.lastFlipResultLabel.alpha = 1;
+		self.flipsLabel.alpha = 1;
+	}
 }
 
 - (IBAction)flipCard:(UIButton *)sender
@@ -117,11 +122,7 @@
 
 - (void)changeMatchingType
 {
-	if (self.matchingTypeSegment.selectedSegmentIndex == 0) {
-		self.game.cardMatchingType = TwoCardMatchingType;
-	} else if (self.matchingTypeSegment.selectedSegmentIndex == 1) {
-		self.game.cardMatchingType = ThreeCardMatchingType;
-	}
+	self.game.cardMatchingType = self.matchingTypeSegment.selectedSegmentIndex ? ThreeCardMatchingType : TwoCardMatchingType;
 }
 
 - (void)backToHistory
