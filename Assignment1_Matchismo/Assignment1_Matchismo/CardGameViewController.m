@@ -47,7 +47,7 @@
 				
 		UIImage *rikka = [UIImage imageNamed:@"Rikka"];
 		
-		//I don't know why I have to write as following to hidden the image of a button, otherwise it won't work, I jsut tried out this by luck.
+		//I don't know why I have to write as following to hide the image of a button, otherwise it won't work, I jsut tried out this by luck.
 		[cardButton setImage:rikka forState:UIControlStateNormal];
 		[cardButton setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
 		[cardButton setImage:[[UIImage alloc] init] forState:UIControlStateDisabled|UIControlStateSelected];
